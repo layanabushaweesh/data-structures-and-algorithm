@@ -56,31 +56,18 @@ let characters = [
 
 const sortByChildren = (charArray) => {
   // Solution code here...
-  charArray.sort(sortObject);
-
-  function sortObject (a ,b){
-    let aChildren = a.children;
-    var bChildren = b.children;
-    if (aChildren>bChildren) {
-      return 1;
-    }
-    else if (aChildren<bChildren) {
-      return -1;
-    }
-    else{
-      let aHouse = a.house;
-      let bHouse = b.house;
-      if (aHouse>bHouse) {
+  charArray.sort((a, b) => {
+    if (a.children.length > b.children.length) {
         return 1;
-      }
-      else if (aHouse<bHouse) {
+    } else if (a.children.length < b.children.length) {
         return -1;
-      }
-
+    } else if (a.name > b.name) {
+        return 1;
+    } else {
+        return -1;
     }
-
-  }
-  return charArray;
+});
+return charArray;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -97,8 +84,8 @@ const courseInfo = { name: 'Code 301', duration: { dayTrack: '4 weeks', eveningT
 
 const getCourseKeys = (obj) => {
   // Solution code here...
-  const newObj = Object.keys(obj);
-  return newObj;
+  return Object.keys(obj);
+
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -111,12 +98,13 @@ Write a function named checkValues that takes in an object and a value and retur
 
 const checkValues = (obj, value) => {
   // Solution code here...
-  if (Object.values(obj).includes(value)) {
-    return true;
-  }
-  else{
-    return false;
-  }
+  let check = false;
+    Object.values(obj).forEach(val => {
+        if (val == value) {
+            return check = true;
+        }
+    });
+    return check;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -140,11 +128,12 @@ HR has asked you to change the data to make it easier to print so that it looks 
 
 const updateNumbers = (obj) => {
   // Solution code here...
-  const objArray =[];
-  Object.entries(obj).forEach(element =>{
-    objArray.push(element.join(': '));
-  });
-  return objArray;
+  const newArr = [];
+  let arr = [];
+  for (let key in obj) {
+      arr.push(key + ': ' + obj[key]);
+  };
+  return arr;
 };
 
 
@@ -158,11 +147,9 @@ Write a function named getHouses that returns a new array containing the names o
 const getHouses = (arr) => {
   let houses = [];
   // Solution code here...
-
-  let houses = [];
-  arr.forEach(element =>{
-    houses.push(element.house);
-  });
+  for (let i = 0; i < arr.length; i++) {
+    houses.push(arr[i].house);
+}
   return houses;
 };
 
@@ -180,12 +167,14 @@ hasChildrenValues(characters, 'Sansa') will return false
 
 const hasChildrenValues = (arr, character) => {
   // Solution code here...
-  let bool = 0;
-  arr.forEach(element =>{
-    if(element.name === character){
-      bool =Object.values(element)[2].length; }
+  let test = false;
+  arr.forEach(e => {
+      Object.values(e).forEach(value => {
+          if (value === character)
+              test = true;
+      });
   });
-  return bool;
+  return test;
 
 };
 
